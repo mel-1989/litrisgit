@@ -26,6 +26,7 @@ class GameEngine {
         this.ctx = ctx;
         this.startInput();
         this.timer = new Timer();
+        
     };
 
     start() {

@@ -14,12 +14,13 @@ class letter {
     };
 
     update() {
-        
+
     };
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet, 17, 19, 76, 83, x, y );
+        ctx.drawImage(this.spritesheet, 17, 19, 76, 83, x, y, 228, 249);
         ctx.drawImage(this.spritesheet, 76, 83, 17, 19, x, y );
+        ctx.drawImage(this.spritesheet,0,0)
     };
 
 };
