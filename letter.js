@@ -14,6 +14,7 @@ class letter {
     };
 
     update() {
+        
     };
 
     draw(ctx) {
