@@ -19,20 +19,21 @@ class AssetManager {
         if (this.downloadQueue.length === 0) setTimeout(callback, 10);
         for (let i = 0; i < this.downloadQueue.length; i++) {
             const img = new Image();
+            var that = this;
 
             const path = this.downloadQueue[i];
             console.log(path);
 
-            img.addEventListener("load", () => {
+            img.addEventListener("load",  () => {
                 console.log("Loaded " + img.src);
                 this.successCount++;
-                if (this.isDone()) callback();
+                if (that.isDone()) callback();
             });
 
             img.addEventListener("error", () => {
                 console.log("Error loading " + img.src);
                 this.errorCount++;
-                if (this.isDone()) callback();
+                if (that.isDone()) callback();
             });
 
             img.src = path;

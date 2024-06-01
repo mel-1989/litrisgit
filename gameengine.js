@@ -10,10 +10,11 @@ class GameEngine {
         this.entities = [];
 
         // Information on the input
-        this.click = null;
-        this.mouse = null;
-        this.wheel = null;
-        this.keys = {};
+        this.left = false;
+        this.right = false;
+        this.down = false;
+        this.space = false;
+        this.misc = false; //for general purposes
 
         // Options and the Details
         this.options = options || {
