@@ -22,7 +22,7 @@ class letter {
 
     update() {
         const movespeed = 4;
-        fallspeed = 2;
+        const fallspeed = 2;
         const currentx = this.x;
         const currenty = this.y;
         
@@ -58,7 +58,7 @@ class letter {
 
         let collision = false;
         for (const other of this.game.entities) {
-            if (other !== this && this.isCollidingWithBox(newBox, other.getBoundingBox())) {
+            if (other !== this && this.isColliding(newBox, other)) {
                 collision = true;
                 break;
             }
@@ -85,14 +85,15 @@ class letter {
     };
 
     isColliding(other) {
-        const box1 = this.getBoundingBox();
-        const box2 = other.getBoundingBox();
+        return this.isCollidingWithBox(this.getBoundingBox(), other.getBoundingBox());
+    };
 
+    isCollidingWithBox(box1, box2) {
         return (
             box1.x < box2.x + box2.width &&
             box1.x + box1.width > box2.x &&
             box1.y < box2.y + box2.height &&
             box1.y + box1.height > box2.y
         );
-    }
+    };
 };
