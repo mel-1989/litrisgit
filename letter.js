@@ -58,7 +58,13 @@ class letter {
 
         let collision = false;
         for (const other of this.game.entities) {
-            if (other !== this && this.isColliding(newBox, other)) {
+            const otherBox = { 
+                x: other.x,
+                y: other.y,
+                width: other.dimension,
+                height: other.dimension
+            };
+            if (other !== this && this.isCollidingWithBox(newBox, otherBox)) {
                 collision = true;
                 break;
             }
