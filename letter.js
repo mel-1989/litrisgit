@@ -2,7 +2,9 @@
 
 class letter {
     constructor(game, x, y, sym) {
-        Object.assign(this, {game, x,y})
+        this.game = game
+        this.x = x
+        this.y = y
         this.symbol = sym;
         this.location;   
         this.player; //true if player is in control of letterblock
@@ -14,13 +16,26 @@ class letter {
     };
 
     update() {
+        const movespeed = 4;
+        //gravity
+        
 
+        if(this.game.left){
+            this.x-= movespeed;
+        };
+        if(this.game.right){
+            this.x+= movespeed;
+        };
+        if(this.game.down){
+            this.y+= movespeed;
+        };
+        if(this.game.up){
+            this.y-= movespeed;
+        };
     };
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet, 17, 19, 76, 83, x, y, 228, 249);
-        ctx.drawImage(this.spritesheet, 76, 83, 17, 19, x, y );
-        ctx.drawImage(this.spritesheet,0,0)
+        ctx.drawImage(this.spritesheet, 17, 19, 76, 83, this.x, this.y, 76, 83);
     };
 
 };
