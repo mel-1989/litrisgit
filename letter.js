@@ -31,7 +31,7 @@ class letter {
         
 
         //gravity
-        newY = this.y - fallspeed;
+        newY = this.y + fallspeed;
         
 
         // Check for movement and update the position
@@ -85,7 +85,13 @@ class letter {
     };
 
     isColliding(other) {
-        return this.isCollidingWithBox(this.getBoundingBox(), other.getBoundingBox());
+        const otherBox = { 
+            x: other.x,
+            y: other.y,
+            width: other.dimension,
+            height: other.dimension
+        };
+        return this.isCollidingWithBox(this.getBoundingBox(), otherBox);
     };
 
     isCollidingWithBox(box1, box2) {
