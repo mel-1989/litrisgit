@@ -74,6 +74,9 @@ class GameEngine {
                 case "Period":
                     that.A = true;
                     break;
+                case "Escape":
+                    that.escape = true;
+                    break;
             }
         }
         function keyUpListener (e) {
@@ -101,6 +104,9 @@ class GameEngine {
                 case "KeyX":
                 case "Period":
                     that.space = false;
+                    break;
+                case "Escape":
+                    that.escape = false;
                     break;
             }
         };
@@ -148,6 +154,24 @@ class GameEngine {
 
     addEntity(entity) {
         this.entities.push(entity);
+        console.log('Entity added:', entity);
+    };
+
+    reset() {
+        for (let i = this.entities.length - 1; i >= 0; --i) {
+            this.entities[i].removeFromWorld = true;
+        }
+
+        this.addEntity(new scene(this));
+    };
+
+    get player() {
+        for (let i = this.entities.length - 1; i >= 0; --i) {
+            if(this.entities[i].player){
+                return this.entities[i];
+            };
+        }
+        return 'dead';
     };
 
     draw() {

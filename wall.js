@@ -5,6 +5,7 @@ class wall {
         this.game = game;
         this.dimension = 19;
         this.direction = direction; //'left' and 'right' are valid
+        this.player = false;
 
 
         this.spritesheet = ASSET_MANAGER.getAsset('sprites/asgorescastlesprites.png');

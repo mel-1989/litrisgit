@@ -11,10 +11,11 @@ ASSET_MANAGER.queueDownload('sprites/asgorescastlesprites.png')
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
-
+	
+	gameEngine.init(ctx);
 	gameEngine.addEntity(new scene(gameEngine));
 
 
-	gameEngine.init(ctx);
+	
 	gameEngine.start();
 });
