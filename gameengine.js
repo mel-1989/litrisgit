@@ -162,7 +162,7 @@ class GameEngine {
             this.entities[i].removeFromWorld = true;
         }
 
-        this.addEntity(new scene(this));
+        this.addEntity(new grid(this));
     };
 
     get player() {

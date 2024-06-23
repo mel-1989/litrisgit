@@ -1,7 +1,10 @@
 class wall {
-    constructor(game, xgrid, ygrid, direction){
+    constructor(game, xgrid, ygrid, grid, direction){
         this.xgrid = xgrid;
         this.ygrid = ygrid;
+        this.grid = grid;
+        
+
         this.game = game;
         this.dimension = 64;
         this.direction = direction; //'left' and 'right' are valid
@@ -34,7 +37,7 @@ class wall {
     };
 
     update(){
-
+        this.grid[ygrid][xgrid] = this;
     };
 
     draw(ctx){
