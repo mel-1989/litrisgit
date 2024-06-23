@@ -1,11 +1,11 @@
 
 
 class letter {
-    constructor(game, xgrid, ygrid, grid, sym) {
+    constructor(game, xgrid, ygrid, EntityStructure, sym) {
         this.game = game;
         this.xgrid = xgrid;
         this.ygrid = ygrid;
-        this.grid = grid;
+        this.EntityStructure = EntityStructure;
         
 
         this.dimension = 64; //size and width
@@ -44,7 +44,7 @@ class letter {
             // Update the last move time
             this.lastMoveTime = currentTime;
         }
-        this.grid[this.ygrid][this.xgrid] = this;
+        this.EntityStructure[this.ygrid][this.xgrid] = this;
         
     };
 

@@ -1,8 +1,8 @@
 class wall {
-    constructor(game, xgrid, ygrid, grid, direction){
+    constructor(game, xgrid, ygrid, EntityStructure, direction){
         this.xgrid = xgrid;
         this.ygrid = ygrid;
-        this.grid = grid;
+        this.EntityStructure = EntityStructure;
         
 
         this.game = game;
@@ -37,7 +37,7 @@ class wall {
     };
 
     update(){
-        this.grid[ygrid][xgrid] = this;
+        this.EntityStructure[this.ygrid][this.xgrid] = this;
     };
 
     draw(ctx){
