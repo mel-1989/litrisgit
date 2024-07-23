@@ -165,6 +165,12 @@ class GameEngine {
         this.addEntity(new grid(this));
     };
 
+    remove(entity){
+        for (let i = this.entities.length - 1; i >= 0; --i) {
+            if(entity==this.entities[i]){this.entities[i].removeFromWorld = true;}
+        }
+    }
+
     get player() {
         for (let i = this.entities.length - 1; i >= 0; --i) {
             if(this.entities[i].player){

@@ -9,6 +9,7 @@ class wall {
         this.dimension = 64;
         this.direction = direction; //'left' and 'right' are valid
         this.player = false;
+        this.symbol = '0'
 
 
         this.spritesheet = ASSET_MANAGER.getAsset('sprites/asgorescastlesprites.png');
@@ -37,7 +38,7 @@ class wall {
     };
 
     update(){
-        this.EntityStructure[this.ygrid][this.xgrid] = this;
+        //this.EntityStructure[this.ygrid][this.xgrid] = this;
     };
 
     draw(ctx){
@@ -49,4 +50,8 @@ class wall {
         };
         
     };
+
+    toString(){
+        return this.symbol;
+    }
 }

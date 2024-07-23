@@ -6,8 +6,8 @@ class letter {
         this.xgrid = xgrid;
         this.ygrid = ygrid;
         this.EntityStructure = EntityStructure;
+        //console.log("arghghg:"+ this.EntityStructure);
         
-
         this.dimension = 64; //size and width
 
         this.symbol = sym;
@@ -136,4 +136,9 @@ class letter {
             box1.y + box1.height >= box2.y
         );
     };
+
+    toString(){
+        return this.symbol;
+    }
+        
 };
