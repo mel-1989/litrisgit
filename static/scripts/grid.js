@@ -3,6 +3,7 @@ class grid {
         this.game = game;
         this.width = this.game.ctx.canvas.width;
         this.height = this.game.ctx.canvas.height;
+        this.score = 0;
 
         this.words = words;
 
@@ -94,10 +95,16 @@ class grid {
             this.game.reset();
         }
         
-        if(this.game.player == 'dead'){
-            let newLetter = new letter(this.game, this.width/128, 0, this.EntityStructure);
+        if(this.game.player.toString() == 'dead'){
+            var randomChar = (function() {//make common letters more common pls
+                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                let result = "";
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+                return result; 
+            })();
+    
+            let newLetter = new letter(this.game, this.width/128, 0, this.EntityStructure, randomChar);
             this.game.addEntity(newLetter);
-            console.log("eoeoeo");
         }
 
 
@@ -111,14 +118,16 @@ class grid {
             for(var j = 0; j < this.cols; j++){ //add letters in row to one string
                 wordCheck = wordCheck + this.EntityStructure[i][j].toString();
             }
-            console.log(wordCheck);
+            var dictionaryChecked = this.dictionarycheck(wordCheck)
             //here is where we check for actual words, for now just a string of blocks
-            if(this.dictionarycheck(wordCheck) != -1){ //(broke)
-                for(var g = 0; g < this.cols; g++){ //removing row
+            if(dictionaryChecked != -1){ //(broke)
+                var pos = dictionaryChecked.location
+                for(var g = pos; g < pos + dictionaryChecked.wordLength; g++){ //removing 
                     this.EntityStructure[i][g].game.remove(EntityStructure[i][g]);
-                }
-            }
-        }
+                };
+                this.score = this.score + dictionaryChecked.wordLength;// increment score
+            };
+        };
     };
 
     draw(ctx){
@@ -126,13 +135,16 @@ class grid {
     };
 
     dictionarycheck(wordCheck){
-
+        location = -1
+        wordLength = -1
         for(let x = 0; x < this.words.length; x++) {
-            if(wordCheck == this.words[x]){
-                return wordCheck.length;
+            if(this.words[x].includes(wordCheck)){ // only works for whole line words
+                location = this.words[x].search(wordCheck);
+                wordLength = this.words[x].length
+                return {location, wordLength} ;
             };
         };
-        return -1;
+        return {location, wordLength};
     };
 
 };

@@ -115,6 +115,7 @@ class letter {
     }
 
     draw(ctx) {
+        //symbol logic needed
         ctx.drawImage(this.spritesheet, 17, 19, 76, 83, 64*this.xgrid, 64*this.ygrid, 64, 64);
     };
 
