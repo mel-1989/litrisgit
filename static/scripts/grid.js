@@ -97,7 +97,7 @@ class grid {
         
         if(this.game.player.toString() == 'dead'){
             var randomChar = (function() {//make common letters more common pls
-                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                const chars = "abcdefghijklmnopqrstuvwxyz";
                 let result = "";
                 result += chars.charAt(Math.floor(Math.random() * chars.length));
                 return result; 
@@ -120,10 +120,14 @@ class grid {
             }
             var dictionaryChecked = this.dictionarycheck(wordCheck)
             //here is where we check for actual words, for now just a string of blocks
-            if(dictionaryChecked != -1){ //(broke)
-                var pos = dictionaryChecked.location
+            if(dictionaryChecked.loc != -1 && dictionaryChecked.wordLength != -1){ //(broke)
+                var pos = dictionaryChecked.loc
                 for(var g = pos; g < pos + dictionaryChecked.wordLength; g++){ //removing 
-                    this.EntityStructure[i][g].game.remove(EntityStructure[i][g]);
+                    if(this.EntityStructure[i][g].player == false){
+                        this.game.remove(this.EntityStructure[i][g])
+                        this.EntityStructure[i][g] = 0;
+                        
+                    }
                 };
                 this.score = this.score + dictionaryChecked.wordLength;// increment score
             };
@@ -135,16 +139,16 @@ class grid {
     };
 
     dictionarycheck(wordCheck){
-        location = -1
-        wordLength = -1
+        var loc = -1
+        var wordLength = -1
         for(let x = 0; x < this.words.length; x++) {
-            if(this.words[x].includes(wordCheck)){ // only works for whole line words
-                location = this.words[x].search(wordCheck);
+            if(wordCheck.includes(this.words[x])){ // only works for whole line words
+                loc = wordCheck.search(this.words[x]);
                 wordLength = this.words[x].length
-                return {location, wordLength} ;
+                return {loc, wordLength} ;
             };
         };
-        return {location, wordLength};
+        return {loc, wordLength};
     };
 
 };

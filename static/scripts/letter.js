@@ -11,6 +11,7 @@ class letter {
         this.dimension = 64; //size and width
 
         this.symbol = sym;
+        this.sheet;
         this.supported;
         this.player = true; //true if player is in control of letterblock
 
@@ -40,6 +41,7 @@ class letter {
         // Check if enough time has passed since the last move
         if (currentTime - this.lastMoveTime >= this.moveDelay) {
             // Perform the move
+            this.EntityStructure[this.ygrid][this.xgrid] = 0;
             this.move();
             // Update the last move time
             this.lastMoveTime = currentTime;
@@ -116,7 +118,8 @@ class letter {
 
     draw(ctx) {
         //symbol logic needed
-        ctx.drawImage(this.spritesheet, 17, 19, 76, 83, 64*this.xgrid, 64*this.ygrid, 64, 64);
+        var mymap = this.createsymbolmap();
+        ctx.drawImage(this.spritesheet, mymap.get(this.symbol)[0], mymap.get(this.symbol)[1], 76, 83, 64*this.xgrid, 64*this.ygrid, 64, 64);
     };
 
     isColliding(other) {
@@ -140,6 +143,24 @@ class letter {
 
     toString(){
         return this.symbol;
+    }
+
+    createsymbolmap(){
+        const mymap = new Map();
+        
+
+        for(let i = 0; i<9;i++){
+            mymap.set(String.fromCharCode(i+97), [17+i*112, 19])
+        }
+        for(let i = 0; i<9;i++){
+            mymap.set(String.fromCharCode(i+105), [17+i*112, 140])
+        }
+        for(let i = 0; i<9;i++){
+            mymap.set(String.fromCharCode(i+113), [17+i*112, 260])
+        }
+
+        
+        return mymap;
     }
         
 };
