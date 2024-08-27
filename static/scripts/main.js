@@ -4,9 +4,10 @@ const ASSET_MANAGER = new AssetManager();
 
 const lightmode = false;
 
-ASSET_MANAGER.queueDownload('./sprites/lettersdarkmode.png');
+ASSET_MANAGER.queueDownload('./sprites/lettersbright3.png');
 ASSET_MANAGER.queueDownload('./sprites/letterslightmode.png');
-ASSET_MANAGER.queueDownload('sprites/asgorescastlesprites.png')
+ASSET_MANAGER.queueDownload('sprites/asgorescastlesprites.png');
+
 
 async function loadDictionary(ctx) {
 	var words;

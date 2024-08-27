@@ -16,27 +16,6 @@ class wall {
         console.log(this.spritesheet);
     }
 
-    getBoundingBox() {
-        return {
-            x: this.x,
-            y: this.y,
-            width: this.dimension,
-            height: this.dimension
-        };
-    }
-
-    isColliding(other) {
-        const box1 = this.getBoundingBox();
-        const box2 = other.getBoundingBox();
-
-        return (
-            box1.x < box2.x + box2.width &&
-            box1.x + box1.width > box2.x &&
-            box1.y < box2.y + box2.height &&
-            box1.y + box1.height > box2.y
-        );
-    };
-
     update(){
         //this.EntityStructure[this.ygrid][this.xgrid] = this;
     };

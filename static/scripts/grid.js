@@ -97,20 +97,28 @@ class grid {
         
         if(this.game.player.toString() == 'dead'){
             var randomChar = (function() {//make common letters more common pls
-                const chars = "abcdefghijklmnopqrstuvwxyz";
+                const chars = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbccccccccccccccccccccccdddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffffffffgggggggggggghhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijkkkkklllllllllllllllllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnooooooooooooooooooooooooooooooooooooppppppppppppppppqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttuuuuuuuuuuuuuuuuuuvvvvvwwwwwwxyz"; // my genius solution to frequency
                 let result = "";
                 result += chars.charAt(Math.floor(Math.random() * chars.length));
                 return result; 
             })();
     
-            let newLetter = new letter(this.game, this.width/128, 0, this.EntityStructure, randomChar);
-            this.game.addEntity(newLetter);
+            if(this.EntityStructure[0][5]!=0){
+                lose_condition()
+            } else{
+                let newLetter = new letter(this.game, this.width/128, 0, this.EntityStructure, randomChar);
+                this.game.addEntity(newLetter);
+            }
         }
 
 
 
         this.checkgrid();
     };
+
+    lose_condition(){
+        
+    }
 
     checkgrid(){
         for( var i = 0; i < this.rows; i++){

@@ -13,19 +13,16 @@ class letter {
         this.symbol = sym;
         this.sheet;
         this.supported;
-        this.player = true; //true if player is in control of letterblock
+        this.player = 1; //1 if player is in control of letterblock, 0 if not, 2 if stored.
 
         this.moveDelay = 300; // Delay in milliseconds
         this.lastMoveTime = Date.now(); // Track the last move time
 
-        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/lettersdarkmode.png");
-        if(lightmode) {
-            this.spritesheet = ASSET_MANAGER.getAsset("./sprites/letterslightmode.png");
-        };
+        this.spritesheet = ASSET_MANAGER.getAsset("./sprites/lettersbright3.png"); //./sprites/lettersbright.png
         
     };
 
-    /*get xgrid() {
+    /*get xgrid() 
         return Math.floor(this.x / 64); // Calculate xprime based on x
     }
     get ygrid() {
@@ -34,7 +31,13 @@ class letter {
 
 
 
-    update() {    
+    update() {  
+        if(this.player==1){
+            if(this.game.misc){
+                this.player = 2
+            }
+        }  
+       
         // Get the current time
         const currentTime = Date.now();
 
@@ -60,7 +63,7 @@ class letter {
 
         //gravity
         newY = this.ygrid + 1;
-        if(this.player){
+        if(this.player==1){
             // Check for movement and update the position
             if (this.game.left) {
                 newX -= 1;
@@ -75,22 +78,9 @@ class letter {
                 newY -= 1;
             };
         };
-        //check new collision
-       /* const newBox = { 
-            x: newX,
-            y: newY,
-            width: this.dimension,
-            height: this.dimension
-        };*/
 
         let collision = false;
         for (const other of this.game.entities) {
-            /*const otherBox = { 
-                x: other.x,
-                y: other.y,
-                width: other.dimension,
-                height: other.dimension
-            };*/
             if (other !== this && newX === other.xgrid && newY === other.ygrid) {
                 collision = true;
                 break;
@@ -102,43 +92,15 @@ class letter {
             this.ygrid = newY;
         };
         if(collision) {
-            this.player = false;
+            this.player = 0;
             this.spritesheet = ASSET_MANAGER.getAsset("./sprites/letterslightmode.png");
-        };
-    }
-
-    getBoundingBox() {
-        return {
-            x: this.x,
-            y: this.y,
-            width: this.dimension,
-            height: this.dimension
         };
     }
 
     draw(ctx) {
         //symbol logic needed
         var mymap = this.createsymbolmap();
-        ctx.drawImage(this.spritesheet, mymap.get(this.symbol)[0], mymap.get(this.symbol)[1], 76, 83, 64*this.xgrid, 64*this.ygrid, 64, 64);
-    };
-
-    isColliding(other) {
-        const otherBox = { 
-            x: other.x,
-            y: other.y,
-            width: other.dimension,
-            height: other.dimension
-        };
-        return this.isCollidingWithBox(this.getBoundingBox(), otherBox);
-    };
-
-    isCollidingWithBox(box1, box2) {
-        return ( //console.log(box1.x  + ' ' + box1.width + ' ' + box2.x + ' ' + box1.width)
-            box1.x <= box2.x + box2.width &&
-            box1.x + box1.width >= box2.x &&
-            box1.y <= box2.y + box2.height &&
-            box1.y + box1.height >= box2.y
-        );
+        ctx.drawImage(this.spritesheet, mymap.get(this.symbol)[1], mymap.get(this.symbol)[0], 110, 120, 64*this.xgrid, 64*this.ygrid, 64, 64);
     };
 
     toString(){
@@ -149,15 +111,32 @@ class letter {
         const mymap = new Map();
         
 
-        for(let i = 0; i<9;i++){
-            mymap.set(String.fromCharCode(i+97), [17+i*112, 19])
-        }
-        for(let i = 0; i<9;i++){
-            mymap.set(String.fromCharCode(i+105), [17+i*112, 140])
-        }
-        for(let i = 0; i<9;i++){
-            mymap.set(String.fromCharCode(i+113), [17+i*112, 260])
-        }
+        mymap.set(String.fromCharCode(97), [1, 1]); // a
+        mymap.set(String.fromCharCode(98), [1, 111]); // b
+        mymap.set(String.fromCharCode(99), [1, 221]); // c
+        mymap.set(String.fromCharCode(100), [1,331]); // d
+        mymap.set(String.fromCharCode(101), [1, 441]); // e
+        mymap.set(String.fromCharCode(102), [1,551]); // f
+        mymap.set(String.fromCharCode(103), [1, 661]); // g
+        mymap.set(String.fromCharCode(104), [1, 771]); // h
+        mymap.set(String.fromCharCode(105), [1, 881]); // i
+        mymap.set(String.fromCharCode(106), [121, 1]); // j
+        mymap.set(String.fromCharCode(107), [121, 111]); // k
+        mymap.set(String.fromCharCode(108), [121, 221]); // l
+        mymap.set(String.fromCharCode(109), [121, 331]); // m
+        mymap.set(String.fromCharCode(110), [121, 441]); // n
+        mymap.set(String.fromCharCode(111), [121, 551]); // o
+        mymap.set(String.fromCharCode(112), [121, 661]); // p
+        mymap.set(String.fromCharCode(113), [121, 771]); // q
+        mymap.set(String.fromCharCode(114), [121, 881]); // r
+        mymap.set(String.fromCharCode(115), [241, 1]); // s
+        mymap.set(String.fromCharCode(116), [241, 111]); // t
+        mymap.set(String.fromCharCode(117), [241, 221]); // u
+        mymap.set(String.fromCharCode(118), [241, 331]); // v
+        mymap.set(String.fromCharCode(119), [241, 441]); // w
+        mymap.set(String.fromCharCode(120), [241, 551]); // x
+        mymap.set(String.fromCharCode(121), [241, 661]); // y
+        mymap.set(String.fromCharCode(122), [241, 771]); // z
 
         
         return mymap;
