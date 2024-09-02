@@ -87,6 +87,7 @@ class letter {
             };
         };
 
+
         if (!collision) { //will need to be refined so that box can still move when collision occurs in one direction
             this.xgrid = newX;
             this.ygrid = newY;
@@ -94,6 +95,7 @@ class letter {
         if(collision) {
             this.player = 0;
             this.spritesheet = ASSET_MANAGER.getAsset("./sprites/letterslightmode.png");
+            this.draw(this.game.ctx);
         };
     }
 

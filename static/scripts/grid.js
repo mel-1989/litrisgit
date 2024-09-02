@@ -126,18 +126,19 @@ class grid {
             for(var j = 0; j < this.cols; j++){ //add letters in row to one string
                 wordCheck = wordCheck + this.EntityStructure[i][j].toString();
             }
-            var dictionaryChecked = this.dictionarycheck(wordCheck)
+            var dictionaryCheckedx = this.dictionarycheck(wordCheck)
+            var dictionaryCheckedy = this.dictionarycheck(wordCheck)
             //here is where we check for actual words, for now just a string of blocks
-            if(dictionaryChecked.loc != -1 && dictionaryChecked.wordLength != -1){ //(broke)
-                var pos = dictionaryChecked.loc
-                for(var g = pos; g < pos + dictionaryChecked.wordLength; g++){ //removing 
+            if(dictionaryCheckedx.loc != -1 && dictionaryCheckedx.wordLength != -1){ //(broke)
+                var pos = dictionaryCheckedx.loc
+                for(var g = pos; g < pos + dictionaryCheckedx.wordLength; g++){ //removing 
                     if(this.EntityStructure[i][g].player == false){
                         this.game.remove(this.EntityStructure[i][g])
                         this.EntityStructure[i][g] = 0;
                         
                     }
                 };
-                this.score = this.score + dictionaryChecked.wordLength;// increment score
+                this.score = this.score + dictionaryCheckedx.wordLength;// increment score
             };
         };
     };
@@ -156,6 +157,7 @@ class grid {
                 return {loc, wordLength} ;
             };
         };
+
         return {loc, wordLength};
     };
 
