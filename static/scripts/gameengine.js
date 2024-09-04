@@ -1,116 +1,131 @@
 // This game shell was happily modified from Googler Seth Ladd's "Bad Aliens" game and his Google IO talk in 2011
 
 class GameEngine {
-    constructor(options) {
-        // What you will use to draw
-        // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-        this.ctx = null;
+  constructor(options) {
+    // What you will use to draw
+    // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+    this.ctx = null;
 
-        // Everything that will be updated and drawn each frame
-        this.entities = [];
+    // Everything that will be updated and drawn each frame
+    this.entities = [];
 
-        // Information on the input
-        this.left = false;
-        this.right = false;
-        this.down = false;
-        this.space = false;
-        this.misc = false; //for general purposes
+    // Information on the input
+    this.left = false;
+    this.right = false;
+    this.down = false;
+    this.X = false;
+    this.misc = false; //for general purposes
 
-        // Options and the Details
-        this.options = options || {
-            debugging: false,
-        };
+    this.moment = 0;
+    this.lastMoment = 0;
+
+    // Options and the Details
+    this.options = options || {
+      debugging: false,
+    };
+  }
+
+  init(ctx) {
+    this.ctx = ctx;
+    this.startInput();
+    this.timer = new Timer();
+  }
+
+  start() {
+    this.running = true;
+    const gameLoop = () => {
+      this.loop();
+      requestAnimFrame(gameLoop, this.ctx.canvas);
+    };
+    gameLoop();
+  }
+
+  start() {
+    this.running = true;
+    const gameLoop = () => {
+      this.loop();
+      requestAnimFrame(gameLoop, this.ctx.canvas);
+    };
+    gameLoop();
+  }
+
+  startInput() {
+    var that = this;
+
+    var getXandY = function (e) {
+      var x = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
+      var y = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
+
+      return { x: x, y: y, radius: 0 };
     };
 
-    init(ctx) {
-        this.ctx = ctx;
-        this.startInput();
-        this.timer = new Timer();
-        
-    };
-
-    start() {
-        this.running = true;
-        const gameLoop = () => {
-            this.loop();
-            requestAnimFrame(gameLoop, this.ctx.canvas);
-        };
-        gameLoop();
-    };
-
-    startInput() {
-        var that = this;
-
-        var getXandY = function (e) {
-            var x = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
-            var y = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
-
-            return { x: x, y: y, radius: 0 };
-        }
-        
-        function keydownListener (e) {
-            switch (e.code) {
-                case "ArrowLeft":
-                case "KeyA":
-                    that.left = true;
-                    break;
-                case "ArrowRight":
-                case "KeyD":
-                    that.right = true;
-                    break;
-                case "ArrowUp":
-                case "KeyW":
-                    that.up = true;
-                    break;
-                case "ArrowDown":
-                case "KeyS":
-                    that.down = true;
-                    break;
-                case "KeyZ":
-                case "Comma":
-                    that.B = true;
-                    break;
-                case "KeyX":
-                case "Period":
-                    that.A = true;
-                    break;
-                case "Escape":
-                    that.escape = true;
-                    break;
-            }
-        }
-        function keyUpListener (e) {
-            switch (e.code) {
-                case "ArrowLeft":
-                case "KeyA":
-                    that.left = false;
-                    break;
-                case "ArrowRight":
-                case "KeyD":
-                    that.right = false;
-                    break;
-                case "ArrowUp":
-                case "KeyW":
-                    that.up = false;
-                    break;
-                case "ArrowDown":
-                case "KeyS":
-                    that.down = false;
-                    break;
-                case "KeyZ":
-                case "Comma":
-                    that.misc = false;
-                    break;
-                case "KeyX":
-                case "Period":
-                    that.space = false;
-                    break;
-                case "Escape":
-                    that.escape = false;
-                    break;
-            }
-        };
-        /*this.ctx.canvas.addEventListener("movemove", e => {
+    function keydownListener(e) {
+      switch (e.code) {
+        case "ArrowLeft":
+        case "KeyA":
+          that.left = true;
+          that.leftframe = true;
+          break;
+        case "ArrowRight":
+        case "KeyD":
+          that.right = true;
+          that.rightframe = true;
+          break;
+        case "ArrowUp":
+        case "KeyW":
+          that.up = true;
+          that.upframe = true;
+          break;
+        case "ArrowDown":
+        case "KeyS":
+          that.down = true;
+          that.downframe = true;
+          break;
+        case "KeyZ":
+        case "Comma":
+          that.B = true;
+          break;
+        case "KeyX":
+        case "Period":
+          that.X = true;
+          break;
+        case "Escape":
+          that.escape = true;
+          break;
+      }
+    }
+    function keyUpListener(e) {
+      switch (e.code) {
+        case "ArrowLeft":
+        case "KeyA":
+          that.left = false;
+          break;
+        case "ArrowRight":
+        case "KeyD":
+          that.right = false;
+          break;
+        case "ArrowUp":
+        case "KeyW":
+          that.up = false;
+          break;
+        case "ArrowDown":
+        case "KeyS":
+          that.down = false;
+          break;
+        case "KeyZ":
+        case "Comma":
+          that.misc = false;
+          break;
+        case "KeyX":
+        case "Period":
+          that.X = false;
+          break;
+        case "Escape":
+          that.escape = false;
+          break;
+      }
+    }
+    /*this.ctx.canvas.addEventListener("movemove", e => {
             if (this.options.debugging) {
                 console.log("MOUSE_MOVE", getXandY(e));
             }
@@ -144,76 +159,85 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
         */
 
-        that.keydown = keydownListener;
-        that.keyup = keyUpListener;
+    that.keydown = keydownListener;
+    that.keyup = keyUpListener;
 
-        this.ctx.canvas.addEventListener("keydown", that.keydown, false);
+    this.ctx.canvas.addEventListener("keydown", that.keydown, false);
 
-        this.ctx.canvas.addEventListener("keyup", that.keyup, false);
-    };
+    this.ctx.canvas.addEventListener("keyup", that.keyup, false);
+  }
 
-    addEntity(entity) {
-        this.entities.push(entity);
-        console.log('Entity added:', entity);
-    };
+  addEntity(entity) {
+    this.entities.push(entity);
+    //console.log("Entity added:", entity);
+  }
 
-    reset() {
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            this.entities[i].removeFromWorld = true;
-        }
-
-        this.addEntity(new grid(this));
-    };
-
-    remove(entity){
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            if(entity==this.entities[i]){this.entities[i].removeFromWorld = true;}
-        }
+  reset() {
+    for (let i = this.entities.length - 1; i >= 0; --i) {
+      this.entities[i].removeFromWorld = true;
     }
 
-    get player() {
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            if(this.entities[i].player){
-                return this.entities[i];
-            };
-        }
-        return 'dead';
-    };
+    this.addEntity(new grid(this));
+  }
 
-    draw() {
-        // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+  remove(entity) {
+    for (let i = this.entities.length - 1; i >= 0; --i) {
+      if (entity == this.entities[i]) {
+        this.entities[i].removeFromWorld = true;
+      }
+    }
+  }
 
-        // Draw latest things first
-        for (let i = this.entities.length - 1; i >= 0; i--) {
-            this.entities[i].draw(this.ctx, this);
-        }
-    };
+  get player() {
+    for (let i = this.entities.length - 1; i >= 0; --i) {
+      if (this.entities[i].player) {
+        return this.entities[i];
+      }
+    }
+    return "dead";
+  }
 
-    update() {
-        let entitiesCount = this.entities.length;
+  draw() {
+    // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-        for (let i = 0; i < entitiesCount; i++) {
-            let entity = this.entities[i];
+    // Draw latest things first
+    for (let i = this.entities.length - 1; i >= 0; i--) {
+      this.entities[i].draw(this.ctx, this);
+    }
+  }
 
-            if (!entity.removeFromWorld) {
-                entity.update();
-            }
-        }
+  update() {
+    let entitiesCount = this.entities.length;
 
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            if (this.entities[i].removeFromWorld) {
-                this.entities.splice(i, 1);
-            }
-        }
-    };
+    var currentTime = Date.now();
+    if (currentTime - this.lastMoment >= 200) {
+      this.upframe = false;
+      this.downframe = false;
+      this.leftframe = false;
+      this.rightframe = false;
+    }
 
-    loop() {
-        this.clockTick = this.timer.tick();
-        this.update();
-        this.draw();
-    };
+    for (let i = 0; i < entitiesCount; i++) {
+      let entity = this.entities[i];
 
-};
+      if (!entity.removeFromWorld) {
+        entity.update();
+      }
+    }
+
+    for (let i = this.entities.length - 1; i >= 0; --i) {
+      if (this.entities[i].removeFromWorld) {
+        this.entities.splice(i, 1);
+      }
+    }
+  }
+
+  loop() {
+    this.clockTick = this.timer.tick();
+    this.update();
+    this.draw();
+  }
+}
 
 // KV Le was here :)

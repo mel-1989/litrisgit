@@ -38,19 +38,21 @@ ASSET_MANAGER.downloadAll(() => {
 
 async function open() {
   try {
-    const response = await fetch('/api/openai', {
-      method: 'POST',
+    const response = await fetch("/api/openai", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: 'Say this is a test' }),
+      body: JSON.stringify({
+        message: "Tell me about the capital of Djibouti",
+      }),
     });
 
     const data = await response.json();
     console.log(data.message);
   } catch (error) {
-    console.error('Error fetching OpenAI response:', error);
+    console.error("Error fetching OpenAI response:", error);
   }
 }
 
-open();
+//open();

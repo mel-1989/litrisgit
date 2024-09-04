@@ -17424,7 +17424,6 @@ GOOD
 Lucretia
 Official
 cards
-Wiktionary:Frequency lists/Project Gutenberg 30001-40000|30001-40000
 sucked
 sucking
 Supposing
@@ -17541,6 +17540,7 @@ supplies
 enquiry
 euery
 kann
+latte
 fatigue
 protested
 damals
@@ -48828,7 +48828,7 @@ Sulphur
 belang
 bunting
 canyon
-cheques]] 
+cheques]]
 superimposed
 tierra
 truss
@@ -52463,7 +52463,7 @@ W.N.W.
 adorer
 censuring
 classics
-dÃ©jÃ 
+dÃ©jÃ
 enmity
 geweld
 handelt
@@ -59703,7 +59703,7 @@ glaive
 heeled
 hen's
 hoes
-jusqu'Ã 
+jusqu'Ã
 mixt
 mozo
 muleteer
@@ -61903,7 +61903,7 @@ parsnips
 perspectives
 pester
 porteur
-qu'Ã 
+qu'Ã
 s'avance
 sawe
 struts
@@ -64901,7 +64901,7 @@ stimulus
 tamer
 trundled
 ungeheure
-voilÃ 
+voilÃ
 warres
 Anywhere
 Barefoot
