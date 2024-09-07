@@ -177,7 +177,7 @@ class GameEngine {
       this.entities[i].removeFromWorld = true;
     }
 
-    this.addEntity(new grid(this));
+    this.addEntity(new grid(this, data));
   }
 
   remove(entity) {

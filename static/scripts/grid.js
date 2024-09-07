@@ -6,6 +6,7 @@ class grid {
     this.score = 0;
 
     this.words = words;
+    this.deaths = 0;
 
     //defines grid
     (this.EntityStructure = []), (this.rows = this.height / 64);
@@ -20,7 +21,13 @@ class grid {
     console.log(this.EntityStructure);
 
     game.addEntity(
-      new letter(game, this.width / 128, 0, this.EntityStructure, "a"),
+      new letter(
+        game,
+        this.width / 128,
+        0,
+        this.EntityStructure,
+        openDictionary["3"].characters[0],
+      ),
     );
     game.addEntity(new wall(game, 0, 18, this.EntityStructure, "left"));
     game.addEntity(new wall(game, 1, 18, this.EntityStructure, "left"));
@@ -93,24 +100,57 @@ class grid {
     }
 
     if (this.game.player.toString() == "dead") {
-      var randomChar = (function () {
-        //make common letters more common pls
-        const chars =
-          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbccccccccccccccccccccccdddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffffffffgggggggggggghhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijkkkkklllllllllllllllllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnooooooooooooooooooooooooooooooooooooppppppppppppppppqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttuuuuuuuuuuuuuuuuuuvvvvvwwwwwwxyz"; // my genius solution to frequency
-        let result = "";
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-        return result;
-      })();
-
+      // var randomChar = (function () {
+      //   //make common letters more common pls
+      //   const chars =
+      //     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbccccccccccccccccccccccdddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffffffffgggggggggggghhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijkkkkklllllllllllllllllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnooooooooooooooooooooooooooooooooooooppppppppppppppppqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttuuuuuuuuuuuuuuuuuuvvvvvwwwwwwxyz";
+      //   let result = "";
+      //   result += chars.charAt(Math.floor(Math.random() * chars.length));
+      //   return result;
+      // })();
+      console.log(openDictionary);
+      console.log(typeof openDictionary);
+      this.deaths++;
       if (this.EntityStructure[0][5] != 0) {
         this.lose_condition();
+      } else if (this.deaths < openDictionary["3"]["characters"].length) {
+        let newLetter = new letter(
+          this.game,
+          this.width / 128,
+          0,
+          this.EntityStructure,
+          openDictionary["3"]["characters"][this.deaths],
+        );
+        this.game.addEntity(newLetter);
+      } else if (this.deaths < openDictionary["4"]["characters"].length) {
+        let newLetter = new letter(
+          this.game,
+          this.width / 128,
+          0,
+          this.EntityStructure,
+          openDictionary["4"]["characters"][
+            this.deaths - openDictionary["3"]["characters"].length
+          ],
+        );
+        this.game.addEntity(newLetter);
+      } else if (this.deaths < openDictionary["5"]["characters"].length) {
+        let newLetter = new letter(
+          this.game,
+          this.width / 128,
+          0,
+          this.EntityStructure,
+          openDictionary["5"]["characters"][
+            this.deaths - openDictionary["4"]["characters"].length
+          ],
+        );
+        this.game.addEntity(newLetter);
       } else {
         let newLetter = new letter(
           this.game,
           this.width / 128,
           0,
           this.EntityStructure,
-          randomChar,
+          "x",
         );
         this.game.addEntity(newLetter);
       }
